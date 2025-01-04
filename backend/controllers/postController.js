@@ -21,7 +21,7 @@ async function(req, res){
             data:{
                 title: req.body.title,
                 content: req.body.content,
-                authorId: Number(req.body.authorId),
+                authorId: Number(req.params.userId),
                 published: Boolean(req.body.published)
             }
         });

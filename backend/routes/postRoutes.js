@@ -2,15 +2,32 @@ import { Router } from "express";
 import postController from '../controllers/postController.js';
 import passport from 'passport';
 import authLogic from "../middleware/authLogic.js";
+import postLogic from "../middleware/postLogic.js";
+import misc from "../middleware/misc.js";
 
 const postRoutes = Router();
-postRoutes.post('/create', postController.createPost);
+postRoutes.post('/create',
+    passport.authenticate('jwt',{session:false}),
+    misc.assignUserId,
+    postController.createPost);
 
 postRoutes.get('/read',postController.getAllBlogs);
 
 postRoutes.get('/read/author/:authorId',postController.getBlogsByAuthorId);
 postRoutes.get('/read/post/:id',postController.getBlogsById);
-postRoutes.post('/update/:id',postController.updateBlogPost);
-postRoutes.delete('/delete/:id',postController.deleteBlog);
+
+postRoutes.post('/update/:id',
+    passport.authenticate('jwt',{session:false}),
+    postLogic.findUserByPostId,
+    authLogic.authorize(false),
+    postController.updateBlogPost
+);
+
+postRoutes.delete('/delete/:id',
+    passport.authenticate('jwt',{session:false}),
+    postLogic.findUserByPostId,
+    authLogic.authorize(true),
+    postController.deleteBlog
+);
 
 export default postRoutes;

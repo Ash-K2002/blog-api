@@ -10,12 +10,6 @@ const createValidator=[
     body('content')
     .optional(),
 
-    body('authorId')
-    .notEmpty()
-    .withMessage('The author id must not be empty')
-    .isNumeric()
-    .withMessage('The author id must be numeric')
-
 ];
 
 const updateValidator=[
