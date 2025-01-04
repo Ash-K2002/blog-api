@@ -34,14 +34,16 @@ commentRoutes.post('/create',
     commentController.createComment
 );
 
-commentRoutes.post('/update/:userId',
-    passport.authenticate('jwt', {session: false}),authLogic.authorize(false),
+commentRoutes.post('/update/:id',
+    passport.authenticate('jwt', {session: false}),
+    commentLogic.findUserByCommentId,
+    authLogic.authorize(false),
     commentController.updateComment
 );
 
 commentRoutes.delete('/delete/:id',
-    commentLogic.findUserByCommentId,
     passport.authenticate('jwt', {session: false}),
+    commentLogic.findUserByCommentId,
     authLogic.authorize(true),
     commentController.deleteComment
 );
