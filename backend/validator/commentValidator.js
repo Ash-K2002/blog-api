@@ -9,14 +9,7 @@ const createValidator =[
         max: 500
     })
     .withMessage('The length must not exceed 500'),
-
-    body('userId')
-    .trim()
-    .notEmpty()
-    .withMessage('The user id must not be empty')
-    .isNumeric()
-    .withMessage('The user id must be a number'),
-
+    
     body('blogId')
     .trim()
     .notEmpty()

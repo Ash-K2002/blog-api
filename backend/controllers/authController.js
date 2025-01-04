@@ -88,6 +88,7 @@ passport.use(
                     role: true,
                 }
             });
+            return done(null,user);
         }
         catch(err){
             return done(err, false);

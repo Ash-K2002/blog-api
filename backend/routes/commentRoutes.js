@@ -1,5 +1,8 @@
 import { Router } from "express";
 import commentController from '../controllers/commentController.js';
+import authLogic from "../middleware/authLogic.js";
+import commentLogic from "../middleware/commentLogic.js"
+import passport from "passport";
 
 const commentRoutes= Router();
 
@@ -20,9 +23,27 @@ commentRoutes.get('/read',async (req, res)=>{
             error: 'Invalid request, no Id specified'
         });
     }
-})
-commentRoutes.post('/create',commentController.createComment);
-commentRoutes.post('/update/:id',commentController.updateComment);
-commentRoutes.delete('/delete/:id',commentController.deleteComment);
+});
+
+commentRoutes.post('/create',
+    passport.authenticate('jwt', {session: false}),
+    (req,res,next)=>{
+        req.params.userId=req.user.id;
+        next();
+    },
+    commentController.createComment
+);
+
+commentRoutes.post('/update/:userId',
+    passport.authenticate('jwt', {session: false}),authLogic.authorize(false),
+    commentController.updateComment
+);
+
+commentRoutes.delete('/delete/:id',
+    commentLogic.findUserByCommentId,
+    passport.authenticate('jwt', {session: false}),
+    authLogic.authorize(true),
+    commentController.deleteComment
+);
 
 export default commentRoutes;

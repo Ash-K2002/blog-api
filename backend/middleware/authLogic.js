@@ -1,29 +1,25 @@
-import jwt from 'jsonwebtoken';
-import {config} from 'dotenv';
-config();
+const authorize=(allowAdmin=false)=> (req, res, next)=>{
+    const user = req.user;
+    const id = Number(req.params.userId);
+    console.log(id);
+    console.log(user.id);
+    if(!id){
+        return res.status(404).json({
+            error: 'User id not found'
+        });
+    }
 
-function authenticate(req, res, next){
-    const token = req.headers.authorization.split(' ')[1];
-    if(!token){
-        return res.status(401).json({
-            error: 'Authentication required'
-        });
+    if((allowAdmin && user.role==='ADMIN') || Number(user.id)===id){
+        return next();
     }
-    
-    try{
-        const user = jwt.verify(token, process.env.AUTH_ACCESS_KEY);
-        req.user = user;
-        next();
-    }
-    catch(err){
-        return res.status(403).json({
-            error: 'Invalid or expired token'
-        });
-    }
+
+    res.status(401).json({
+        error: 'Unauthorized'
+    });
 }
 
 export default {
-    authenticate
+    authorize,
 }
 
 

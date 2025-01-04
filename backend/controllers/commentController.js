@@ -17,7 +17,7 @@ const createComment=[
         const newComment = await prisma.comment.create({
             data:{
                 content: req.body.content,
-                userId: Number(req.body.userId),
+                userId: Number(req.params.userId),
                 blogId: Number(req.body.blogId),
             }
         });
