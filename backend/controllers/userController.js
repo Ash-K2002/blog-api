@@ -22,9 +22,7 @@ const createUserPost= [
             error:errors,
         });
     }
-
-    const roles = Object.values(Role);
-    if(!roles.includes(req.body.role)){
+    if(!validateRoles(req.body.role)){
         return res.status(400).json({
             error: 'Invalid role, check valid user roles in documentation'
         });
@@ -79,7 +77,7 @@ async function findAllUsers(req, res){
 
 async function findUser(req, res){
     try{
-        const id = req.params.id;
+        const id = req.params.userId;
         const user = await prisma.user.findUnique({
             where:{id: Number(id)},
             select:{
@@ -129,7 +127,7 @@ const updateUserPost=[
 
         try {
             const user = await prisma.user.findUnique({
-                where:{id: Number(req.params.id)},
+                where:{id: Number(req.params.userId)},
             });
             if(!user){
                 return res.status(404).json({
@@ -184,7 +182,7 @@ const updateUserPost=[
 
 async function deleteUser(req, res){
     try{
-        const userId = Number(req.params.id);
+        const userId = Number(req.params.userId);
         const user = await prisma.user.findUnique({
             where: {id: userId}
         });
