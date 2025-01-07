@@ -1,8 +1,10 @@
 import e from "express";
 import appRoutes from './routes/appRoutes.js';
 import passport from "passport";
+import cors from 'cors';
 const app= e();
 
+app.use(cors());
 app.use(e.json());
 app.use(e.urlencoded({extended: true}));
 app.use(passport.initialize());
