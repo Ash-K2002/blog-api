@@ -54,31 +54,62 @@ async function getAllBlogs(req, res){
     }
 }
 
-async function getBlogsByAuthorId(req, res){
+async function getPublishedBlogs(req, res){
     try{
-        const {authorId}=req.params;
         const blogs = await prisma.blog.findMany({
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                        role: true,
+                    }
+                },
+            },
             where:{
-                authorId: Number(authorId)
+                published: true
             }
         });
         res.status(200).json({
             blogs
         });
-    }catch(err){
+    }
+    catch(err){
         console.log(err);
         res.status(500).json({
             error: "Internal server error"
         });
     }
+
 }
 
 async function getBlogsById(req, res){
     try{
-        const {id}=req.params;
+        const id=req.params.id;
         const blog = await prisma.blog.findUnique({
             where:{
                 id: Number(id),
+            },
+            include:{
+                author: {
+                    select:{
+                        username: true,
+                        role: true,
+                    }
+                },
+                comments:{
+                    select:{
+                        id: true,
+                        content: true,
+                        createdAt: true,
+                        user:{
+                            select: {
+                                id: true,
+                                username: true,
+                                role: true,
+                            }
+                        }
+                    }
+                },
             }
         });
         res.status(200).json({
@@ -183,7 +214,7 @@ async function deleteBlog(req, res){
 const postController ={
     createPost,
     getAllBlogs,
-    getBlogsByAuthorId,
+    getPublishedBlogs,
     getBlogsById,
     updateBlogPost,
     deleteBlog,

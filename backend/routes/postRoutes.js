@@ -12,9 +12,8 @@ postRoutes.post('/create',
     postController.createPost);
 
 postRoutes.get('/read',postController.getAllBlogs);
-
-postRoutes.get('/read/author/:authorId',postController.getBlogsByAuthorId);
-postRoutes.get('/read/post/:id',postController.getBlogsById);
+postRoutes.get('/read/published', postController.getPublishedBlogs);
+postRoutes.get('/read/:id',postController.getBlogsById);
 
 postRoutes.post('/update/:id',
     passport.authenticate('jwt',{session:false}),

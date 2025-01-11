@@ -5,8 +5,8 @@ import commentRoutes from "./commentRoutes.js";
 import authRoute from "./authRoutes.js";
 
 const appRoutes = Router();
-appRoutes.use('/posts',postRoutes);
-appRoutes.use('/users',userRoutes);
+appRoutes.use('/blog',postRoutes);
+appRoutes.use('/user',userRoutes);
 appRoutes.use('/comment',commentRoutes);
 appRoutes.use('/',authRoute);
 
