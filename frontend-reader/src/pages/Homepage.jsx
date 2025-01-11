@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import authUtil from '../utils/authUtil.js';
+import Blogs from '../components/Blogs.jsx';
 
 function HomePage(){
     const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -21,12 +22,14 @@ function HomePage(){
     if(isAuthenticated){
         return (<>
         <h1>Hello user</h1>
+        <Blogs/>
         </>);
     }
 
     return (
         <>
-            <section>sign in to see magic!!</section>
+            <h1>sign in to see magic!!</h1>
+            <Blogs/>
         </>
     );
 }
