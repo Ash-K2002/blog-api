@@ -23,7 +23,7 @@ function BlogDetail(){
 
     if(loading){
         return (<>
-        <h1>...Loading</h1>
+        <h2>...Loading</h2>
         </>);
     }
 
@@ -50,7 +50,7 @@ function BlogDetail(){
 // the main body of the blog's content and description
 function BlogMainCard({blog}){
     return (
-        <><h1 className="blog-title">{blog.title}</h1>
+        <><h2 className="blog-title">{blog.title}</h2>
         <section className="blog-detail">
             <ul>
                 <li>By: {blog.author.username}</li>

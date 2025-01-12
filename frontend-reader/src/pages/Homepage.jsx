@@ -21,14 +21,12 @@ function HomePage(){
     }
     if(isAuthenticated){
         return (<>
-        <h1>Hello user</h1>
         <Blogs/>
         </>);
     }
 
     return (
         <>
-            <h1>sign in to see magic!!</h1>
             <Blogs/>
         </>
     );

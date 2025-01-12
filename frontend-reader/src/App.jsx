@@ -1,23 +1,31 @@
 import './App.css'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/Homepage';
 import BlogDetail from './pages/BlogDetail';
+import Header from './components/Header';
+
 
 const appRoutes = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage/>
-  },
-  {
-    path:'/login',
-    element:<LoginPage/>
-  },
-  {
-    path: '/blog/:id',
-    element: <BlogDetail/>
+    element: <Layout/>,
+    children:[
+      {path:'', element: <HomePage/>},
+      {path:'login', element:<LoginPage/>},
+      {path: 'blog/:id', element: <BlogDetail/>}
+    ]
   }
-])
+]);
+
+function Layout({children}){
+  return(
+    <>
+    <Header/>
+    <Outlet/>
+    </>
+  );
+}
 
 function App() {
 
@@ -25,7 +33,7 @@ function App() {
     <>
       <RouterProvider router={appRoutes}/>
     </>
-  )
+  );
 }
 
 export default App
