@@ -19,7 +19,7 @@ const createUserPost= [
     
     if(!errors.isEmpty()){
         return res.status(400).json({
-            error:errors,
+            errors,
         });
     }
     if(!validateRoles(req.body.role)){

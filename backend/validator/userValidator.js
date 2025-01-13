@@ -4,7 +4,7 @@ const createValidator=
 [
     body('username')
     .isLength({min:1, max:100})
-    .withMessage("Max length for username is 100"),
+    .withMessage("Username must have length 1-100"),
 
     body('password')
     .isLength({min:5, max:100})
