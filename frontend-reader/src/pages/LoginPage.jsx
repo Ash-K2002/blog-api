@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function LoginPage(){
     const [username, setUsername]= useState("");
     const [password, setPassword]= useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -30,6 +32,7 @@ function LoginPage(){
             console.log("JWT Token: ", data.token);
             localStorage.setItem('token', data.token);
             alert("Login Successful");
+            navigate('/');
             }
             
         }
