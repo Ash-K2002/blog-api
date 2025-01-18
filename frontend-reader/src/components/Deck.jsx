@@ -10,7 +10,7 @@ function Deck({Card, dataArr}){
     });
 
     return (<>
-    <ul className='Deck'>
+    <ul>
         {cardArr}
     </ul>
     </>)

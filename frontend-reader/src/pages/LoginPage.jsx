@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import {AuthContext} from '../utils/Contexts.js';
+import { useContext } from 'react';
 
 function LoginPage(){
     const [username, setUsername]= useState("");
     const [password, setPassword]= useState("");
     const navigate = useNavigate();
+    const {setIsAuthenticated} = useContext(AuthContext);
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -31,10 +34,9 @@ function LoginPage(){
             if(data.token){
             console.log("JWT Token: ", data.token);
             localStorage.setItem('token', data.token);
-            alert("Login Successful");
+            setIsAuthenticated(true);
             navigate('/');
             }
-            
         }
         catch(err){
             console.error("Error during login: ",err);

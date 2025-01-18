@@ -4,11 +4,17 @@ import useFetchData from '../utils/useFetchData.js';
 import {useNavigate} from 'react-router-dom';
 import { useContext } from 'react';
 import {AuthContext} from '../utils/Contexts.js';
+import classNames from '../constants/classNames.js';
 
 function Account(){
     const {logout} = useContext(AuthContext);
     const navigate = useNavigate();
     const id = authUtil.getLoggedInUserId();
+    if(!id){
+        return<>
+        <h2>Login to view account</h2>
+        </>
+    }
     const {data, loading, error} = useFetchData(`${BASE_URL}/user/read/${id}`);
 
     const handleLogout = ()=>{
@@ -32,13 +38,13 @@ function Account(){
     }
     if(data){
         return (
-            <>
-            <h2>Welcome {data.username}</h2>
+            <section className='text-customBlue-dark'>
+            <h2 className='text-3xl'>Hello <span className='font-bold'>{data.username}</span></h2>
             <ul>
-                <li>Role: {data.role}</li>
-                <li><button type='button' onClick={handleLogout}>Logout</button></li>                
+                <li className=''>Role: {data.role}</li>
+                <li><button type='button' onClick={handleLogout} className={classNames.button2}>Logout</button></li>                
             </ul>
-            </>
+            </section>
         )
     }
     

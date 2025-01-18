@@ -11,11 +11,15 @@ function AuthProvider({children}){
     }
 
     useEffect(()=>{
-        const valid = authUtil.checkAuth();
+        let valid = isAuthenticated;
+        const authenticate=async()=>{
+        valid = await authUtil.checkAuth();
         setIsAuthenticated(valid);
+        }
+        authenticate();
     },[]);
 
-    return <AuthContext.Provider value={{isAuthenticated, logout}}>
+    return <AuthContext.Provider value={{isAuthenticated, logout, setIsAuthenticated}}>
         {children}
     </AuthContext.Provider>
 }

@@ -1,9 +1,10 @@
 import { data, useParams } from "react-router-dom"
 import useFetchData from '../utils/useFetchData.js';
 import {BASE_URL} from '../constants/constants.js';
-import Deck from '../components/Deck.jsx';
 import {createContext, useContext, useState } from "react";
 import authUtils from '../utils/authUtil.js';
+import classNames from "../constants/classNames.js";
+import {AuthContext} from '../utils/Contexts.js';
 
 const BlogDetailContext= createContext({
     refreshKey:0,
@@ -12,7 +13,7 @@ const BlogDetailContext= createContext({
 
 // The main component that renders the page
 function BlogDetail(){
-
+    const {isAuthenticated} = useContext(AuthContext);
     const {id}=useParams();
     const [refreshKey, setRefreshKey] = useState(0);
     const {data, loading, error} = useFetchData(`${BASE_URL}/blog/read/${id}`, refreshKey);
@@ -33,14 +34,24 @@ function BlogDetail(){
     }
 
     if(data){
+        const commentCardArr=data.blog.comments.map((comment)=>{
+            return (<li key={comment.id}
+             className="bg-customGray-dark text-customBlue-dark p-2"><BlogCommentsCard data={comment}/></li>);
+        });
+
         return(<BlogDetailContext.Provider value={{refreshKey, handleCommentSubmit}}>
 
         <BlogMainCard blog={data.blog}/>
-        <section className="blog-comments">
-        <h2>Comments</h2>
-        <AddComments blogId={data.blog.id}/>
-        <Deck dataArr={data.blog.comments} 
-              Card={BlogCommentsCard}/>
+        <section id="blog-detail-comment" className="my-10 flex flex-col gap-3">
+
+        <h2 className="font-bold text-customBlue-dark text-xl px-2">Comments</h2>
+
+        {(isAuthenticated)?<AddComments blogId={data.blog.id}/>:<div className="p-4 font-semibold text-xl text-customBlue-dark">Login to comment to blogs</div>}
+        
+
+        <ul className="flex flex-col gap-3 p-2">
+            {commentCardArr}
+        </ul>
         </section>
 
         </BlogDetailContext.Provider>);
@@ -50,17 +61,16 @@ function BlogDetail(){
 // the main body of the blog's content and description
 function BlogMainCard({blog}){
     return (
-        <><h2 className="blog-title">{blog.title}</h2>
-        <section className="blog-detail">
-            <ul>
-                <li>By: {blog.author.username}</li>
-                <li>Published at: {blog.publishedAt}</li>
-            </ul>
-        </section>
-        <p className="blog-content">
+        <section id="blog-detail-main" className="flex flex-col bg-customGray-dark p-4 text-customBlue-dark">
+        <h2 className="font-bold text-3xl">{blog.title}</h2>
+        <ul className="flex flex-row gap-4 text-sm">
+                <li> <span className="font-semibold">By:</span> {blog.author.username}</li>
+                <li><span className="font-semibold">Published at:</span> {blog.publishedAt}</li>
+        </ul>
+        <p className="mt-4 py-3 text-lg font-medium">
             {blog.content}
         </p>
-        </>
+        </section>
     );
 }
 
@@ -71,6 +81,9 @@ function AddComments({blogId}){
 
     const handleAddComment= async (e)=>{
         e.preventDefault();
+        if(content==""){
+            return;
+        }
         try {
             const response = await fetch(`${BASE_URL}/comment/create`,{
                 method:'POST',
@@ -100,18 +113,23 @@ function AddComments({blogId}){
 
 
     return (<>
-    <form onSubmit={handleAddComment}>
-        <ul>
-            <li>
-                <label htmlFor="comment-form-content">Comment:</label>
-                <input type="text"
+    <form onSubmit={handleAddComment} className="bg-customGray-light flex flex-col p-2 gap-2 text-customBlue-dark">
+                <label htmlFor="comment-form-content" className="flex flex-row items-start gap-2 font-semibold">Comment
+                <textarea
                     name="content" id="comment-form-content"
                     value={content}
-                    onChange={(e)=>setContent(e.target.value)}/>
-            </li>
-        </ul>
-        <button type="submit">Submit</button>
-        <button type="button" onClick={()=>{setContent("")}}>Cancel</button>
+                    onChange={(e)=>setContent(e.target.value)}
+                    className={classNames.textArea1}
+                    placeholder="Add you comment.."
+                    />
+                </label>
+ 
+        <section className="flex flex-row gap-3">
+        <button type="submit" className={`${classNames.button1}`}  disabled={!content.trim()}>Submit</button>
+
+        <button type="button" onClick={()=>{setContent("")}} className={`${classNames.button1}`}>Cancel</button> 
+        </section>
+        
     </form>
     </>)
 }
@@ -156,12 +174,15 @@ function BlogCommentsCard({data}){
 
   return (
     <>
-    <p>{data.content}</p>
-    <section className="comment-user">{data.user.username}, {data.user.id}</section>
-    <section className="comment-createdAt">{data.createdAt}
+    <section className="comment-user text-sm font-semibold text-customBlue-medium">{data.user.username}</section>
+    <p className="text-lg font-medium">{data.content}</p>
+    <section className="comment-createdAt text-sm text-medium">{data.createdAt}
     </section>
-    {isLoggedInUser && <button onClick={handleDeleteComment}>Delete</button>}
-    {isLoggedInUser && <button onClick={(e)=>{setEditing(true)}}>Edit</button>}
+    {isLoggedInUser && <section className="flex flex-row gap-2">
+      <button onClick={handleDeleteComment} className={classNames.button1}>Delete</button>
+    <button onClick={(e)=>{setEditing(true)}} className={classNames.button1}>Edit</button>
+    </section>}
+    
     </>
   );
 }
@@ -201,21 +222,20 @@ function EditComment({comment, setEditing}){
 
     return (<>
         <form onSubmit={handleEditComment}>
-            <ul>
-                <li><label htmlFor="comment-edit-content">Content: </label>
-                <input 
-                    type="text"
+                <label htmlFor="comment-edit-content" className="font-semibold flex flex-row gap-2 items-center">Comment <textarea 
                     name="content" id="comment-edit-content"
                     onChange={(e)=>{setContent(e.target.value)}}
                     value={content}
-                    />
-                </li>
-            </ul>
-            <section className='buttons'>
-                <button type="submit">Submit</button>
+                    className={classNames.textArea1}
+                    /> </label>
+                
+            <section className='buttons flex flex-row gap-3'>
+                <button type="submit" className={classNames.button1}
+                disabled={!content.trim()}
+                >Submit</button>
                 <button type="button" onClick={()=>{setContent("");
                  setEditing(false);
-                }}>Cancel</button>
+                }} className={classNames.button1}>Cancel</button>
             </section>
         </form>
     </>);
