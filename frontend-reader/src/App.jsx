@@ -6,6 +6,7 @@ import Header from './components/Header';
 import SignupPage from './pages/SignupPage';
 import Account from './pages/Account';
 import Footer from './components/Footer';
+import ErrorPage from './pages/ErrorPage';
 
 
 const appRoutes = createBrowserRouter([
@@ -18,7 +19,8 @@ const appRoutes = createBrowserRouter([
       {path: 'blog/:id', element: <BlogDetail/>},
       {path: '/signup', element: <SignupPage/>},
       {path: '/account', element: <Account/>},
-    ]
+    ],
+    errorElement: <ErrorPage/>
   }
 ]);
 
