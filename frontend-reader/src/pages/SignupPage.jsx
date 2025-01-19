@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {BASE_URL} from '../constants/constants.js';
 import {useNavigate} from 'react-router-dom';
+import classNames from '../constants/classNames.js';
 
 function SignupPage(){
     const navigate=useNavigate();
@@ -52,20 +53,21 @@ function SignupPage(){
     }
 
     return (<>
-    <h2>This is the signup page</h2>
-    <form>
-        <ul>
-            <li>
-                <label htmlFor="signup-username">Username</label>
+    <form className="border-2 border-customBlue-dark text-customBlue-dark bg-customGray-dark p-3 rounded-xl w-[450px] mx-5">
+        <h2 className="font-semibold">Signup</h2>
+        <ul className="flex flex-col gap-2">
+            <li className="flex flex-row gap-4 justify-between">
+                <label htmlFor="signup-username" >Username</label>
                 <input type="text"
                        name="username" 
                        id="signup-username"
                        value={username}
                        onChange={(e)=>{setUsername(e.target.value)}}
                        required
+                       className={classNames.textInput1}
                        />
             </li>
-            <li>
+            <li className="flex flex-row gap-4 justify-between">
                 <label htmlFor="signup-password">Password</label>
                 <input type="password"
                        name="password" 
@@ -73,9 +75,10 @@ function SignupPage(){
                        value={password}
                        onChange={(e)=>{setPassword(e.target.value)}}
                        required
+                       className={classNames.textInput1}
                        />
             </li>
-            <li>
+            <li className="flex flex-row gap-4 justify-between">
                 <label htmlFor="signup-confirm-password">Confirm password</label>
                 <input type="password"
                        name="confirm-password" 
@@ -83,10 +86,13 @@ function SignupPage(){
                        value={confirmPassword}
                        onChange={(e)=>{setConfirmPassword(e.target.value)}}
                        required
+                       className={classNames.textInput1}
                        />
             </li>
         </ul>
-        <button type="submit" onClick={handleSubmit}>Submit</button>
+        <button type="submit" onClick={handleSubmit} className={classNames.button1} 
+        disabled={!password.trim() || !confirmPassword.trim() || !username.trim()}
+        >Submit</button>
     </form>
     </>);
 }

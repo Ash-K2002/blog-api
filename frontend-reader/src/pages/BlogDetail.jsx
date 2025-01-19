@@ -48,12 +48,15 @@ function BlogDetail(){
 
         {(isAuthenticated)?<AddComments blogId={data.blog.id}/>:<div className="p-4 font-semibold text-xl text-customBlue-dark">Login to comment to blogs</div>}
         
-
-        <ul className="flex flex-col gap-3 p-2">
+        {
+        (commentCardArr.length==0)?
+        <div className="px-3 text-customBlue-dark font-semibold text-lg">No comments to show here, be the first to comment!</div>:<ul className="flex flex-col gap-3 p-2">
             {commentCardArr}
         </ul>
-        </section>
+        }
+        
 
+        </section> 
         </BlogDetailContext.Provider>);
     }
 }

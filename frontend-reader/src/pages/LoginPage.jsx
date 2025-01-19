@@ -3,7 +3,8 @@ import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import {AuthContext} from '../utils/Contexts.js';
 import { useContext } from 'react';
-
+import classNames from '../constants/classNames.js'
+;
 function LoginPage(){
     const [username, setUsername]= useState("");
     const [password, setPassword]= useState("");
@@ -45,9 +46,9 @@ function LoginPage(){
     }
 
     return(<>
-    <form onSubmit={handleSubmit}>
-        <ul>
-            <li>
+    <form onSubmit={handleSubmit} className='bg-customGray-dark rounded-lg p-5 flex flex-col items-start w-[400px] border-2 border-customBlue-dark mx-4 my-2'>
+        <ul className='flex flex-col gap-3'>
+            <li className='flex flex-row gap-4'>
                 <label htmlFor="login-username">Username</label>
                 <input  type="text"
                         name="username"
@@ -55,9 +56,11 @@ function LoginPage(){
                         id="login-username"
                         onChange={(e)=> setUsername(e.target.value)} 
                         required
+                        placeholder='Enter Username'
+                        className={classNames.textInput1}
                 />
             </li>
-            <li>
+            <li className='flex flex-row gap-4'>
                 <label htmlFor="">Password</label>
                 <input type="password"
                        name="password" 
@@ -65,10 +68,13 @@ function LoginPage(){
                        value={password}
                        onChange={(e)=>setPassword(e.target.value)}
                        required
+                       placeholder='Enter password'
+                       className={classNames.textInput1}
                 />
             </li>
         </ul>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={!password.trim() || !username.trim()}
+        className={classNames.button1}>Login</button>
     </form>
     </>);
 }
