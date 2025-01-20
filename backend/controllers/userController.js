@@ -111,6 +111,68 @@ async function getRoles(req, res){
     });
 }
 
+async function getPublishedBlogs(req, res){
+    const id = req.params.userId;
+    try{
+        const blogs = await prisma.blog.findMany({
+            where:{
+                authorId:id,
+                published:true,
+            },
+            select:{
+                id:true,
+                title:true,
+                publishedAt:true,
+            }
+        });
+
+        if(!blogs){
+            return res.status(404).json({
+                error: 'No blogs found',
+            });
+        }
+
+        res.status(200).json({
+            blogs
+        });
+    }
+    catch(err){
+        return res.status(500).json({
+            error: 'Internal server error',
+        });
+    }
+}
+
+async function getUnpublishedBlogs(req, res){
+    const id = req.params.userId;
+    try{
+        const blogs = await prisma.blog.findMany({
+            where:{
+                authorId:id,
+                published:false,
+            },
+            select:{
+                id:true,
+                title:true,
+            }
+        });
+
+        if(!blogs){
+            return res.status(404).json({
+                error: 'No blogs found',
+            });
+        }
+
+        res.status(200).json({
+            blogs
+        });
+    }
+    catch(err){
+        return res.status(500).json({
+            error: 'Internal server error',
+        });
+    }
+}
 
 //---------UPDATE------------//
 
@@ -209,6 +271,8 @@ const userController ={
     findAllUsers,
     findUser,
     getRoles,
+    getPublishedBlogs,
+    getUnpublishedBlogs,
     updateUserPost,
     deleteUser,
 }
