@@ -24,3 +24,9 @@ export async function checkAuth(){
         return false;
     }
 }
+
+export function getUserId(){
+    const token = localStorage.getItem('authorToken');
+    const decoded = jwtDecode(token);
+    return decoded.id;
+}
