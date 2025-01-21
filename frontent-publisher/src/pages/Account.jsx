@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { useFetchData } from "../utils/useFetchData.js";
 import { BASE_URL } from "../constants/constants";
 import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext.jsx";
+import { AuthContext } from "../contexts/Contexts.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Account(){

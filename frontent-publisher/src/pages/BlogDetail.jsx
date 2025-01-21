@@ -3,7 +3,7 @@ import {useFetchData} from '../utils/useFetchData.js';
 import {BASE_URL} from '../constants/constants.js';
 import { getUserId } from '../utils/authUtil.js';
 import { useState,useContext } from 'react';
-import {BlogContext} from '../contexts/BlogContext.jsx';
+import {BlogContext} from '../contexts/Contexts.jsx';
 
 
 function BlogDetail(){

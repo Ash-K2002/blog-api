@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 import {checkAuth} from '../utils/authUtil.js';
-import { AuthContext } from "../contexts/AuthContext.jsx";
+import { AuthContext } from "../contexts/Contexts.jsx";
 
 
 function AuthProvider({children}){
