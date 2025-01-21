@@ -7,6 +7,7 @@ import SignupPage from './pages/SignupPage';
 import CreateBlog from './pages/CreateBlog';
 import UserBlogs from './pages/UserBlogs';
 import BlogDetail from './pages/BlogDetail';
+import Account from './pages/Account';
 
 const appRoutes = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const appRoutes = createBrowserRouter([
       {path: 'create', element: <CreateBlog/>},
       {path: 'blogs', element: <UserBlogs/>},
       {path: 'blog/:id', element: <BlogDetail/>},
+      {path: '/account', element: <Account/>}
     ]
   }
 ]);

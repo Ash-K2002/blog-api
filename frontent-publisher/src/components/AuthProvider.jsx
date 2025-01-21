@@ -1,17 +1,13 @@
 import { useState, useEffect, createContext } from "react";
 import {checkAuth} from '../utils/authUtil.js';
+import { AuthContext } from "../contexts/AuthContext.jsx";
 
-const AuthContext = createContext({
-    isAuthenticated: false,
-    logout: ()=>{},
-    setIsAuthenticated: ()=>{},
-});
 
 function AuthProvider({children}){
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const logout = ()=>{
-        localStorage.removeItem('authotToken');
+        localStorage.removeItem('authorToken');
         setIsAuthenticated(false);
     }
 

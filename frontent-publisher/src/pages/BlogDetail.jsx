@@ -2,15 +2,14 @@ import {useParams} from 'react-router-dom';
 import {useFetchData} from '../utils/useFetchData.js';
 import {BASE_URL} from '../constants/constants.js';
 import { getUserId } from '../utils/authUtil.js';
-import { useState,createContext,useContext } from 'react';
+import { useState,useContext } from 'react';
+import {BlogContext} from '../contexts/BlogContext.jsx';
 
-const BlogContext = createContext({
-    handleRefreshPage:()=>{},
-});
 
 function BlogDetail(){
     const {id} = useParams();
     const [refreshCounter, setRefreshCounter] = useState(0);
+    const [editing, setEditing] = useState(false);
 
     const handleRefreshPage=()=>{
         setRefreshCounter(refreshCounter+1);
@@ -39,20 +38,109 @@ function BlogDetail(){
     });
 
     return (<BlogContext.Provider value={{handleRefreshPage}}>
+
+        {
+        (editing)?
+        <EditBlog blog={blog} setEditing={setEditing}/>
+        :
         <section className='blog-main-content'>
         <h2>{blog.title}</h2>
         <p>{blog.content}</p>
-        </section>
-        
-        {(blog.published)?
-        <button>Move to drafts</button>
-        :
-        <button>Publish</button>}
+        <button onClick={()=>setEditing(true)
+        }>Edit Blog</button></section>
+        }
+
         <CreateComment blogId={blog.id}/>
         <ul>
             {commentsArr}
         </ul>
         </BlogContext.Provider>);
+}
+
+function EditBlog({blog,setEditing}){
+    const [content, setContent] = useState(blog.content||"");
+    const [title, setTitle] = useState(blog.title||"");
+    const [published, setPublished] =useState(blog.published||false);
+    const {handleRefreshPage}=useContext(BlogContext);
+
+    const handleSubmit=async(e)=>{
+        e.preventDefault();
+        try{
+            const response = await fetch(`${BASE_URL}/blog/update/${blog.id}`,
+            {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${localStorage.getItem('authorToken')}`
+                },
+                body: JSON.stringify({
+                    title,
+                    content,
+                    published,
+                }),
+                mode:'cors'
+            });
+
+            if(!response.ok){
+                throw new Error('Error while updating blog');
+            }
+            handleRefreshPage();
+            setEditing(false);
+        }
+        catch(err){
+            alert(err);
+        }
+    }
+
+
+    return(
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="title">
+                Title
+                <input 
+                name='title'
+                type="text"
+                value={title}
+                onChange={(e)=>setTitle(e.target.value)}
+                required
+                 />
+            </label>
+
+            <label htmlFor="content">
+                content
+                <textarea
+                name='content'
+                value={content}
+                onChange={(e)=>setContent(e.target.value)}
+                required
+                />
+            </label>
+
+            <label htmlFor="published">
+                Publish
+                <input 
+                name='published'
+                type="checkbox"
+                checked={published}
+                onChange={(e)=>setPublished(e.target.checked)}
+                required
+                 />
+            </label>
+
+            <ul>
+                <li>
+                    <button type='submit'>Submit</button>
+                </li>
+                <li>
+                    <button
+                    onClick={(e)=>{
+                        setEditing(false);
+                    }}
+                    >Cancel</button>
+                </li>
+            </ul>
+        </form>
+    )
 }
 
 function CreateComment({blogId}){

@@ -2,11 +2,13 @@ import {useContext, useState} from 'react';
 import {jwtDecode} from 'jwt-decode';
 import { BASE_URL } from '../constants/constants';
 import {AuthContext} from '../components/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage(){
     const [username, setUsername] = useState("");
     const [password, setPassword]= useState("");
     const {setIsAuthenticated} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSubmit= async(e)=>{
         e.preventDefault();
@@ -32,7 +34,7 @@ function LoginPage(){
             }
             localStorage.setItem('authorToken',res.token);
             setIsAuthenticated(true);
-            alert('Login successful');
+            navigate("/");
         }
         catch(error){
             console.log("Error while logging in ");
