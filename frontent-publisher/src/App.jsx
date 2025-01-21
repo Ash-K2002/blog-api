@@ -8,6 +8,7 @@ import CreateBlog from './pages/CreateBlog';
 import UserBlogs from './pages/UserBlogs';
 import BlogDetail from './pages/BlogDetail';
 import Account from './pages/Account';
+import ErrorPage from './pages/ErrorPage';
 
 const appRoutes = createBrowserRouter([
   {
@@ -21,7 +22,8 @@ const appRoutes = createBrowserRouter([
       {path: 'blogs', element: <UserBlogs/>},
       {path: 'blog/:id', element: <BlogDetail/>},
       {path: '/account', element: <Account/>}
-    ]
+    ],
+    errorElement: <ErrorPage/>
   }
 ]);
 
