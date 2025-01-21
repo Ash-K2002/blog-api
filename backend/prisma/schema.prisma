@@ -32,7 +32,7 @@ model Blog {
   published     Boolean     @default(false)
   authorId      Int
   author        User        @relation("UserBlogs", fields: [authorId], references: [id])
-  comments      Comment[]
+  comments      Comment[]   
 
   @@map("blogs")
 }
@@ -42,7 +42,7 @@ model Comment {
   content       String
   createdAt     DateTime?   @default(now())
   blogId        Int
-  blog          Blog        @relation(fields: [blogId], references: [id])
+  blog          Blog        @relation(fields: [blogId], references: [id], onDelete: Cascade)
   userId        Int
   user          User        @relation(fields: [userId], references: [id])   
 

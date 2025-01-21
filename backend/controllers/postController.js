@@ -135,7 +135,7 @@ const updateBlogPost =[
         }
     
         try{
-            const id = req.params.id;
+            const id = Number(req.params.id);
             const oldPost = await prisma.blog.findUnique({
                 where: {
                     id: id
@@ -151,10 +151,10 @@ const updateBlogPost =[
                 updatedPost.title = req.body.title;
             }
             if(req.body.content){
-                updatedPost.ontent = req.body.content;
+                updatedPost.content = req.body.content;
             }
             if(req.body.published){
-                updatedPost.published = req.body.content;
+                updatedPost.published = Boolean(req.body.content);
             }
 
             if(oldPost.published===false && updatedPost.published==true){
