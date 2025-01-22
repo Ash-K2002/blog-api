@@ -21,22 +21,26 @@ function Blogs({published}){
         )
     }
     const deck = data.blogs.map((blog)=>{
-        return <li key={blog.id}>
+        return <li key={blog.id}
+        className='px-4 py-1 text-customCool-dark hover:bg-customCool-light'
+        >
             <BlogCard blog={blog}/>
         </li>
     })
-    return(<>
+    return(<ul className='flex flex-col divide-y-2 divide-customWarm-dark'>
         {deck}
-    </>);
+    </ul>);
 }
 
 function BlogCard({blog}){
-    return(<Link to={'/blog/'+blog.id}>
-        <section>{blog.title}</section>
+    return(<Link to={'/blog/'+blog.id}
+    className=''
+    >
+        <div className='font-semibold text-lg'>{blog.title}</div>
         {blog.publishedAt &&
-        <section>
+        <div>
             Published At: {blog.publishedAt}
-        </section>}
+        </div>}
     </Link>);
 }
 

@@ -8,20 +8,21 @@ function Header(){
     const {isAuthenticated} =useContext(AuthContext);
 
     return(
-        <header className='sticky top-0 flex flex-row justify-between p-2'>
+        <header className='sticky top-0 flex flex-row justify-between p-2 bg-customWarm-dark'>
             <div className='flex flex-row gap-4'>
             {
             isAuthenticated &&
             <button onClick={toggleSideBar}>
-                <MenuIcon classname={"w-10 h-10 fill-blue-400"}/>
+                <MenuIcon classname={"w-10 h-10 fill-customCool-dark"}/>
             </button>
             }
-
-            Blog-Creator
+            <Link to={'/'}>
+            <h1 className='text-customCool-dark text-2xl font-black'>Blog-Creator</h1>
+            </Link>
             
             </div>
             {isAuthenticated && <Link to={'/account'}>
-            <AccountIcon classname={"w-16 h-16 fill-blue-500"}/>
+            <AccountIcon classname={"w-10 h-10 fill-customCool-dark hover:fill-customCool-medium hover:bg-customCool-dark"}/>
             </Link>}
         </header>
     );

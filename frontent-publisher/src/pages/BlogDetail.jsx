@@ -43,11 +43,13 @@ function BlogDetail(){
         (editing)?
         <EditBlog blog={blog} setEditing={setEditing}/>
         :
-        <section className='blog-main-content'>
-        <h2>{blog.title}</h2>
-        <p>{blog.content}</p>
-        <button onClick={()=>setEditing(true)
-        }>Edit Blog</button></section>
+        <section className='blog-main-content p-4 '>
+        <h2 className='text-customCool-dark text-2xl font-bold'>{blog.title}</h2>
+        <p className='text-customCool-dark text-lg my-2'>{blog.content}</p>
+
+        <button className='text-lg rounded-lg bg-customCool-dark px-2 py-1 text-customWarm-dark outline outline-offset-2 outline-customCool-dark hover:bg-customCool-medium hover:text-customCool-dark' onClick={()=>setEditing(true)
+        }>Edit Blog</button>
+        </section>
         }
 
         <CreateComment blogId={blog.id}/>

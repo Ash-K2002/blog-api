@@ -3,12 +3,14 @@ import Blogs from '../components/Blogs';
 function UserBlogs(){
     return(
         <>
-        <h2>Published Blogs: </h2>
-        <section>
+        <section className='p-2 my-2'>
+        <h2 className='text-customCool-dark font-bold text-2xl'>Published Blogs </h2>
+        
             <Blogs published={true}/>
         </section>
-        <h2>Unpublished Blogs: </h2>
-        <section>
+        <section className='p-2 my-2'>
+        <h2 className='text-customCool-dark font-bold text-2xl'>Unpublished Blogs </h2>
+        
             <Blogs published={false}/>
         </section>
         </>

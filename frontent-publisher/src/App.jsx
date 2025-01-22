@@ -3,9 +3,7 @@ import {useState } from 'react';
 import {LayoutContext} from './contexts/Contexts';
 import './App.css';
 import {AuthProvider} from './components/AuthProvider';
-import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
-import SignupPage from './pages/SignupPage';
 import CreateBlog from './pages/CreateBlog';
 import UserBlogs from './pages/UserBlogs';
 import BlogDetail from './pages/BlogDetail';
@@ -21,8 +19,6 @@ const appRoutes = createBrowserRouter([
     element: <Layout/>,
     children:[
       {path:"", element: <HomePage/>},
-      {path: 'login', element: <LoginPage/>},
-      {path:'signup', element:<SignupPage/>},
       {path: 'create', element: <CreateBlog/>},
       {path: 'blogs', element: <UserBlogs/>},
       {path: 'blog/:id', element: <BlogDetail/>},
@@ -44,7 +40,7 @@ function Layout({children}){
   return(<LayoutContext.Provider value={{showSideBar, toggleSideBar}}>
   <Header/>
   {showSideBar && <SideBar/>}
-  <main>
+  <main className='flex-grow flex flex-col'>
     <Outlet/>
   </main>
   </LayoutContext.Provider>);

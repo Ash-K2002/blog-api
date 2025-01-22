@@ -1,8 +1,9 @@
 import {useContext, useState} from 'react';
 import {jwtDecode} from 'jwt-decode';
 import { BASE_URL } from '../constants/constants';
-import {AuthContext} from '../components/AuthProvider';
+import {AuthContext} from './AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import classNames from '../constants/classNames';
 
 function LoginPage(){
     const [username, setUsername] = useState("");
@@ -42,27 +43,36 @@ function LoginPage(){
         }
     }
 
-    return(<form onSubmit={handleSubmit}>
-    <label htmlFor="username">
+    return(
+    <form onSubmit={handleSubmit}
+    className={classNames.form1}
+    >
+    <label htmlFor="username"
+    className={classNames.label1}
+    >
         Username 
         <input type="text"
         name="username"
         value={username}
         onChange={(e)=>setUsername(e.target.value)}
         required
+        className={classNames.input1}
          />
     </label>
 
-    <label htmlFor="password">
+    <label htmlFor="password"
+    className={classNames.label1}
+    >
         Password 
         <input type="password"
         name="password"
         value={password}
         onChange={(e)=>setPassword(e.target.value)}
         required
+        className={classNames.input1}
          />
     </label>
-    <button type="submit">Submit</button>
+    <button type="submit" className={classNames.button1}>Submit</button>
     </form>);
 }
 
