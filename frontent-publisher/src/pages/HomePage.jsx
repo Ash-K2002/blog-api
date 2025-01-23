@@ -20,7 +20,7 @@ function NoLoginHome(){
 
     return(
         <>
-        <section className='HeroSection mt-10 grid grid-cols-2 p-4 gap-4  bg-customCool-dark text-customWarm-light' aria-labelledby='hero-title'>
+        <section className='HeroSection mt-10 grid grid-cols-1 md:grid-cols-2 p-4 gap-4  bg-customCool-dark text-customWarm-light' aria-labelledby='hero-title'>
             <img src={blogIcon} alt="hero-icon"
             className='w-3/4 justify-self-center'
             />
@@ -38,7 +38,7 @@ function NoLoginHome(){
             </div>
         </section>
 
-        <section className='grid grid-cols-2 p-10'>
+        <section className='grid grid-cols-1 md:grid-cols-2 py-5 md:p-10'>
             <div className='flex flex-col gap-2 p-4 bg-customCool-dark justify-self-center rounded-xl outline outline-4 outline-offset-2 outline-customCool-dark'>
 
             <h2
@@ -52,8 +52,9 @@ function NoLoginHome(){
             }
             </div>
 
-            <div className='flex flex-col items-start gap-4 px-3'>
-                <p className='text-customCool-dark text-3xl font-semibold'>New to our platform?</p>
+            <div className='flex flex-col items-start gap-4 px-3 items-center md:items-start'>
+                <p className='text-customCool-dark text-3xl font-semibold'>
+                    {(showLogin)?"New to our platform?":"Existing user?"}</p>
                 <button onClick={()=>{
                     setShowLogin(!showLogin);
                 }}

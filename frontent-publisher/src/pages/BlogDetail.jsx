@@ -229,20 +229,22 @@ function CreateComment({blogId}){
     }
     return(
     <form onSubmit={handleSubmit} 
-    className='border-customCool-dark border-2 rounded-xl p-2 bg-customCool-medium'
+    className='border-customCool-dark border-2 rounded-xl p-3  bg-customCool-medium'
     >
         <label htmlFor="create-comment-content"
-        className='flex flex-row items-start gap-2 p-4 font-semibold text-customCool-dark'>
+        className='flex flex-col md:flex-row items-start gap-2 
+        font-semibold text-customCool-dark
+        '>
             Comment
         <textarea 
         name="create-comment-content"
         value={content}
         onChange={(e)=>setContent(e.target.value)}
         required
-        className='resize-none w-3/4 h-40 border-2 rounded-lg border-customCool-dark bg-customWarm-light focus:bg-customCool-light p-2 text-lg font-normal'
+        className='resize-none w-full md:w-3/4 h-40 border-2 rounded-lg border-customCool-dark bg-customWarm-light focus:bg-customCool-light p-2 text-lg font-normal'
         />
         </label>
-        <ul className='flex flex-row gap-2'>
+        <ul className='flex flex-row gap-2 p-1'>
             <li><button type='submit'
             className={classNames.button2}
             >Submit</button></li>
@@ -342,14 +344,14 @@ function EditComment({comment, setEditing}){
     }
 
     return(<form onSubmit={handleSubmit} className='p-2 text-customCool-dark'>
-        <label htmlFor="edit-comment" className='flex flex-row gap-2 font-semibold'>
+        <label htmlFor="edit-comment" className='flex flex-col md:flex-col gap-2 font-semibold'>
             Comment
                 <textarea 
                 name="edit-comment"
                 value={content}
                 onChange={(e)=>setContent(e.target.value)}
                 required
-                className='w-3/4 resize-none rounded-lg 
+                className='w-full md:w-3/4 resize-none rounded-lg 
                 border-2 border-customCool-dark hover:bg-customCool-light p-1 font-normal'
                 />
         </label>

@@ -58,7 +58,7 @@ function CreateBlog(){
             value={title}
             onChange={(e)=>setTitle(e.target.value)}
             required
-            className="font-normal text-customCool-dark text-lg focus:bg-customWarm-light rounded-xl p-2 w-3/4 outline outline-customWarm-light outline-offset-2 outline-2"
+            className="font-normal text-customCool-dark text-lg focus:bg-customWarm-light rounded-xl p-2 w-full md:w-3/4 outline outline-customWarm-light outline-offset-2 outline-2"
             />
         </label>
         <label htmlFor="content" className="flex-grow flex flex-col items-start gap-3 w-full text-customWarm-dark text-xl font-semibold">
@@ -67,7 +67,7 @@ function CreateBlog(){
             name="content"
             value={content}
             onChange={(e)=>setContent(e.target.value)}
-            className="flex-grow font-normal text-customCool-dark text-lg focus:bg-customWarm-light rounded-xl p-2 w-3/4 outline outline-customWarm-light outline-offset-2 outline-2
+            className="flex-grow font-normal text-customCool-dark text-lg focus:bg-customWarm-light rounded-xl p-2 w-full md:w-3/4 outline outline-customWarm-light outline-offset-2 outline-2
             resize-none"
             />
         </label>  
@@ -81,7 +81,17 @@ function CreateBlog(){
             className="mx-3 w-4 h-4 accent-customWarm-dark"
             />
         </label>
-        <button type="submit" className={classNames.button1}>Save</button>
+        <ul className="flex flex-row gap-2">
+            <li><button type="submit" className={classNames.button1}>Save</button></li>
+            <li><button className={classNames.button1}
+            onClick={()=>{
+                setContent("");
+                setTitle("");
+                setPublished(false);
+            }}
+            >Clear</button></li>
+        
+        </ul>
     </form>
     </>
     )
