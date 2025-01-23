@@ -4,6 +4,7 @@ import { BASE_URL } from "../constants/constants";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/Contexts.jsx";
 import { useNavigate } from "react-router-dom";
+import classNames from "../constants/classNames.js";
 
 function Account(){
     const {logout} = useContext(AuthContext);
@@ -12,7 +13,7 @@ function Account(){
 
     const handleLogout=()=>{
         logout();
-        navigate('/login');
+        navigate('/');
     }
 
     if(!token){
@@ -36,10 +37,13 @@ function Account(){
         </section>);
     }
 
-    return(<section>
-        <h2>Welcome {data.username}</h2>
-        <p>Role: {data.role}</p>
-        <button onClick={handleLogout}>logout</button>
+    return(<section className="flex flex-col gap-2 p-2 text-customCool-dark">
+        <h2 className="font-bold text-xl">Welcome {data.username}</h2>
+        <p className="text-lg font-semibold">Role: {data.role}</p>
+        <div><button onClick={handleLogout}
+        className={classNames.button3}
+        >logout</button></div>
+        
     </section>);
 }
 

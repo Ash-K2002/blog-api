@@ -7,6 +7,7 @@ function SideBar(){
     const {toggleSideBar} = useContext(LayoutContext);
 
     return(
+        <>
         <section className="fixed top-0 left-0 w-[200px] bg-gray-500 h-screen pt-4">
             <button onClick={toggleSideBar}><CloseIcon classname={"w-16 h-16 fill-red-500"}/></button>
             <ul>
@@ -21,6 +22,7 @@ function SideBar(){
                 </li>
             </ul>
         </section>
+        </>
     )
 }
 

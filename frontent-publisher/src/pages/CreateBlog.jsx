@@ -67,7 +67,8 @@ function CreateBlog(){
             name="content"
             value={content}
             onChange={(e)=>setContent(e.target.value)}
-            className="flex-grow font-normal text-customCool-dark text-lg focus:bg-customWarm-light rounded-xl p-2 w-3/4 outline outline-customWarm-light outline-offset-2 outline-2"
+            className="flex-grow font-normal text-customCool-dark text-lg focus:bg-customWarm-light rounded-xl p-2 w-3/4 outline outline-customWarm-light outline-offset-2 outline-2
+            resize-none"
             />
         </label>  
         <label htmlFor="publish" className="w-full text-customWarm-dark text-xl font-semibold">
