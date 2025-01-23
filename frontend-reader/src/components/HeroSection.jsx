@@ -2,7 +2,7 @@ import blogImage from '../assets/blgimg.jpg'
 
 function HeroSection(){
 return(
-    <section id="hero-section" className='grid grid-cols-2 gap-5 p-5 bg-customGray-dark text-customBlue-medium'>
+    <section id="hero-section" className='grid grid-cols-1 md:grid-cols-2 gap-5 p-5 bg-customGray-dark text-customBlue-medium'>
         <section id="hero-imageFrame" className='w-full h-auto'>
             <img src={blogImage} alt="blog-image" />
         </section>
