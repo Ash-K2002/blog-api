@@ -153,11 +153,10 @@ const updateBlogPost =[
             if(req.body.content){
                 updatedPost.content = req.body.content;
             }
-            if(req.body.published){
-                updatedPost.published = Boolean(req.body.content);
-            }
 
-            if(oldPost.published===false && updatedPost.published==true){
+            updatedPost.published = Boolean(req.body.published);
+
+            if(!oldPost.published && updatedPost.published==true){
                 updatedPost.publishedAt = new Date(Date.now());
             }
 
@@ -167,12 +166,16 @@ const updateBlogPost =[
                 });
             }
 
+            console.log(updatedPost);
+
             const updatedRes = await prisma.blog.update({
                 where:{
                     id: id
                 },
                 data: updatedPost
             });
+
+            console.log(updatedRes);
             res.status(200).json({
                 message: 'Blog updated',
                 id: id,
