@@ -158,7 +158,7 @@ const updateBlogPost =[
             }
 
             if(oldPost.published===false && updatedPost.published==true){
-                updatedPost.publishedAt = Date.now();
+                updatedPost.publishedAt = new Date(Date.now());
             }
 
             if(Object.keys(updatedPost).length===0){
